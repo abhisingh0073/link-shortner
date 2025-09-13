@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Link Shortener</title>
+</head>
+
+<body class="bg-slate-500">
+    <h1 class="text-slate-50 text-5xl font-bold text-center pt-5">Link Shortener</h1>
+
+    <div class="text-center mt-20">
+        <form method="post" action="/url" class="items-center gap-2">
+            <input class="bg-slate-50 p-2 pl-3 text-xl border border-gray-300 rounded-md"
+                type="text"
+                name="url"
+                placeholder="Paste URL Here" />
+            <button class="text-slate-50 bg-violet-600 hover:bg-violet-700 p-2 pl-3 text-xl font-bold rounded-md cursor-pointer">Short</button>
+        </form>
+    </div>
+
+    <% if(locals.id) { %>
+    <div class="text-center mt-20">
+        <h2 class="text-xl font-semibold">Short URL</h2>
+        <p class="mt-5 p-2 pl-5 pr-5 bg-slate-50 inline-block break-all">http://localhost:3000/<%= id %></p>
+    </div>
+    <% } %>
+
+    <!-- Centered fixed-width container -->
+    <div class="mt-20 mx-auto mb-10 w-[800px]">
+        <% if (locals.urls) { %>
+        <table class="w-full table-fixed border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border px-4 py-2 w-16 text-left">S.No</th>
+                    <th class="border px-4 py-2 w-32 text-left">ShortId</th>
+                    <th class="border px-4 py-2 w-80 text-left">Redirect</th>
+                    <th class="border px-4 py-2 w-24 text-left">Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% urls.forEach((url, index) => { %>
+                <tr class="bg-white">
+                    <td class="border px-4 py-2 w-16"><%= index + 1 %></td>
+                    <td class="border px-4 py-2 w-32"><%= url.shortId %></td>
+                    <td class="border px-4 py-2 w-80 truncate overflow-hidden whitespace-nowrap"><%= url.redirectUrl %></td>
+                    <td class="border px-4 py-2 w-24"><%= url.visitHistory.length %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+    </div>
+</body>
+
+</html>
